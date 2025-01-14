@@ -9,7 +9,6 @@ import lombok.Value;
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Membership {
-    private final String membershipId;
     private final String name;
     private final String password;
     private final String email;
@@ -17,28 +16,22 @@ public class Membership {
     private final boolean isValid;
     private final boolean isCorp;
 
-    public static Membership generateMembership(MembershipId membershipId,
-                                                MembershipName membershipName,
+    private final String membershipRefreshToken ;
+
+    public static Membership generateMembership(MembershipName membershipName,
                                                 MembershipPassword membershipPassword,
                                                 MembershipEmail membershipEmail,
                                                 MembershipAddress membershipAddress,
                                                 MembershipIsValid membershipIsValid,
-                                                MembershipIsCorp membershipIsCorp) {
-        return new Membership(membershipId.membershipId,
-                membershipName.name,
+                                                MembershipIsCorp membershipIsCorp,
+                                                MembershipRefreshToken membershipRefreshToken) {
+        return new Membership(membershipName.name,
                 membershipPassword.password,
                 membershipEmail.email,
                 membershipAddress.address,
                 membershipIsValid.isValid,
-                membershipIsCorp.isCorp);
-    }
-
-    @Value
-    public static class MembershipId {
-        public MembershipId(String value) {
-            this.membershipId = value;
-        }
-        String membershipId ;
+                membershipIsCorp.isCorp,
+                membershipRefreshToken.refreshToken);
     }
 
     @Value
@@ -87,6 +80,14 @@ public class Membership {
             this.isCorp = value;
         }
         boolean isCorp ;
+    }
+
+    @Value
+    public static class MembershipRefreshToken {
+        public MembershipRefreshToken(String value) {
+            this.refreshToken = value;
+        }
+        String refreshToken;
     }
 
 }

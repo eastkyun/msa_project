@@ -31,7 +31,7 @@ public class RegisterMembershipService implements RegisterMembershipUseCase {
 
         Membership membership = objectMapper.convertValue(entity, Membership.class);
 
-        System.out.println(membership);
+        System.out.println(membership.toString());
 
         return membership;
     }

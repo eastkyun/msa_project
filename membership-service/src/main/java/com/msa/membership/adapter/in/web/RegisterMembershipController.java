@@ -20,6 +20,7 @@ public class RegisterMembershipController {
     Membership registerMembership(@RequestBody RegisterMembershipRequest request){
         RegisterMembershipCommand command = RegisterMembershipCommand.builder()
                 .name(request.getName())
+                .password(request.getPassword())
                 .address(request.getAddress())
                 .email(request.getEmail())
                 .isCorp(request.isCorp()).build();

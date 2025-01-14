@@ -3,6 +3,8 @@ package com.msa.membership.adapter.out.persistence;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,9 +17,6 @@ import javax.persistence.Table;
 @NoArgsConstructor @AllArgsConstructor
 public class    MembershipJpaEntity {
     @Id
-    @GeneratedValue
-    private Long membershipId;
-
     private String name;
 
     private String password;
@@ -30,25 +29,30 @@ public class    MembershipJpaEntity {
 
     private boolean isCorp;
 
-    public MembershipJpaEntity( String name, String password, String address, String email, boolean isValid, boolean isCorp) {
-        this.name = name;
-        this.password = password;
-        this.address = address;
-        this.email = email;
-        this.isValid = isValid;
-        this.isCorp = isCorp;
-    }
+    private String refreshToken;
 
     @Override
     public String toString() {
         return "MembershipJpaEntity{" +
-                "membershipId=" + membershipId +
-                ", name='" + name + '\'' +
+                "name='" + name + '\'' +
                 ", password='" + password + '\'' +
                 ", address='" + address + '\'' +
                 ", email='" + email + '\'' +
                 ", isValid=" + isValid +
                 ", isCorp=" + isCorp +
+                ", refreshToken='" + refreshToken + '\'' +
                 '}';
+    }
+
+    public MembershipJpaEntity(String name, String address, String email, boolean isValid, boolean isCorp, String refreshToken) {
+        this.name = name;
+        this.address = address;
+        this.email = email;
+        this.isValid = isValid;
+        this.isCorp = isCorp;
+        this.refreshToken = refreshToken;
+    }
+    public MembershipJpaEntity clone() {
+        return new MembershipJpaEntity(this.name, this.address, this.email, this.isValid, this.isCorp, this.refreshToken);
     }
 }

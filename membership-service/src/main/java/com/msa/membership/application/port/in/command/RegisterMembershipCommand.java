@@ -9,7 +9,6 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper=false)
 public class RegisterMembershipCommand extends SelfValidating<RegisterMembershipCommand> {
-    private String membershipId;
     private String name;
     private String password;
     private String email;
@@ -17,8 +16,7 @@ public class RegisterMembershipCommand extends SelfValidating<RegisterMembership
     private boolean isValid;
     private boolean isCorp;
 
-    public RegisterMembershipCommand(String membershipId, String name, String password, String email, String address, boolean isValid, boolean isCorp) {
-        this.membershipId = membershipId;
+    public RegisterMembershipCommand(String name, String password, String email, String address, boolean isValid, boolean isCorp) {
         this.name = name;
         this.password = password;
         this.email = email;
