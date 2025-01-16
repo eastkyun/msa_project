@@ -17,20 +17,27 @@ public class MembershipPersistenceAdapter implements RegisterMembershipPort, Fin
     public MembershipJpaEntity createMembership(Membership.MembershipName membershipName, Membership.MembershipPassword  membershipPassword,
                                                 Membership.MembershipEmail membershipEmail, Membership.MembershipAddress membershipAddress,
                                                 Membership.MembershipIsValid membershipIsValid, Membership.MembershipIsCorp membershipIsCorp) {
+        // TODO 중복 체크 필요
+        boolean isExisted = membershipRepository.existsByName(membershipName.getName());
 
-        MembershipJpaEntity entity = new MembershipJpaEntity(
-                membershipName.getName(),
-                membershipPassword.getPassword(),
-                membershipAddress.getAddress(),
-                membershipEmail.getEmail(),
-                membershipIsValid.isValid(),
-                membershipIsCorp.isCorp(),
-                "");
+        if (!isExisted) {
+            MembershipJpaEntity entity = new MembershipJpaEntity(
+                    membershipName.getName(),
+                    membershipPassword.getPassword(),
+                    membershipAddress.getAddress(),
+                    membershipEmail.getEmail(),
+                    membershipIsValid.isValid(),
+                    membershipIsCorp.isCorp(),
+                    "");
 
-        // entity db save
-        membershipRepository.save(entity);
+            // entity db save
+            membershipRepository.save(entity);
 
-        return entity;
+            return entity;
+
+        }
+        return null;
+
     }
 
     @Override
@@ -48,7 +55,9 @@ public class MembershipPersistenceAdapter implements RegisterMembershipPort, Fin
     }
 
     @Override
-    public MembershipJpaEntity modifyMembership(Membership.MembershipName membershipName, Membership.MembershipEmail membershipEmail, Membership.MembershipAddress membershipAddress, Membership.MembershipIsValid membershipIsValid, Membership.MembershipIsCorp membershipIsCorp, Membership.MembershipRefreshToken membershipRefreshToken) {
+    public MembershipJpaEntity modifyMembership(Membership.MembershipName membershipName, Membership.MembershipEmail membershipEmail,
+                                                Membership.MembershipAddress membershipAddress, Membership.MembershipIsValid membershipIsValid,
+                                                Membership.MembershipIsCorp membershipIsCorp, Membership.MembershipRefreshToken membershipRefreshToken) {
         MembershipJpaEntity entity = membershipRepository.findByName(membershipName.getName());
 
         entity.setName(membershipName.getName());

@@ -21,7 +21,7 @@ public class RegisterMembershipCommand extends SelfValidating<RegisterMembership
         this.password = password;
         this.email = email;
         this.address = address;
-        this.isValid = isValid;
+        this.isValid = true;
         this.isCorp = isCorp;
 
         this.validateSelf();

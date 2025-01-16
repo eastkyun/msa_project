@@ -8,12 +8,14 @@ import com.msa.membership.application.port.out.RegisterMembershipPort;
 import com.msa.membership.domain.Membership;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 
 import javax.transaction.Transactional;
 
 @UseCase
 @RequiredArgsConstructor
 @Transactional
+@Log4j2
 public class RegisterMembershipService implements RegisterMembershipUseCase {
 
     private final RegisterMembershipPort registerMembershipPort;
@@ -28,7 +30,10 @@ public class RegisterMembershipService implements RegisterMembershipUseCase {
                 new Membership.MembershipIsValid(command.isValid()),
                 new Membership.MembershipIsCorp(command.isCorp())
                 );
-
+        if(entity == null) {
+            log.info("중복된 ID 입니다.");
+            return null;
+        }
         Membership membership = objectMapper.convertValue(entity, Membership.class);
 
         System.out.println(membership.toString());
