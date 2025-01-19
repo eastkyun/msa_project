@@ -26,8 +26,8 @@ public class JwtTokenProvider implements AuthMembershipPort {
         // 512 bit = 64 byte
         // env 등을 통해서, 외부 환경변수로부터 데이터를 받아올 수도 있어요.
         this.jwtSecret = Keys.hmacShaKeyFor("ayNJkDfvNXd1OF25WaNVH2P54gL9VHNA".getBytes());
-        this.jwtTokenExpirationInMs = 1000L * 60;
-        this.refreshTokenExpirationInMs = 1000L * 60;
+        this.jwtTokenExpirationInMs = 1000L * 600;
+        this.refreshTokenExpirationInMs = 1000L * 600;
     }
 
     @Override
@@ -63,6 +63,7 @@ public class JwtTokenProvider implements AuthMembershipPort {
                     .setSigningKey(jwtSecret)
                     .build()
                     .parseClaimsJws(jwtToken);
+            log.info("JWT token validated");
             return true;
         } catch (MalformedJwtException ex) {
             log.error("Invalid JWT token: {}", ex.getMessage());

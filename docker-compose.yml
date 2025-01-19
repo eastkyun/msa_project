@@ -23,6 +23,7 @@ services:
       start_period: 30s
       timeout: 5s
 
+
   membership-service:
     image: msa_project-membership-service:1.0.0
     networks:
@@ -38,7 +39,10 @@ services:
       - SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT=org.hibernate.dialect.MySQL5InnoDBDialect
       - SPRING_JPA_HIBERNATE_DDL_AUTO=create-drop
       - SPRING_MVC_PATHMATCH_MATCHING_STRATEGY=ant_path_matcher
-
+      - SPRING_SECURITY_ALGORITHM=AES
+      - SPRING_SECURITY_TRANSFORMATION=AES/ECB/PKCS5Padding
+      - SPRING_SECURITY_KEY=askdljflkzjcxvisadofgjgkalwjweht
+      
 networks:
   msa_network:
     driver: bridge
